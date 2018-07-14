@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 // import Page from "../components/Page";
 import {Alert, BackHandler, StyleSheet, View, WebView, Platform} from "react-native";
+import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
 import colors from "../theme/colors";
@@ -68,11 +69,14 @@ class NewProductsScreen extends Component {
     _renderApp = () => {
         return (
             <View style={[styles.appContainer]}>
-                <WebView
+                <WKWebView
                     //style={{flex: 1}}
                     ref={webViewRef}
+                    allowsBackForwardNavigationGestures={true}
+                    bounces={false}
                     automaticallyAdjustContentInsets={false}
                     source={{uri: defaultUrl}}
+                    dataDetectorTypes={'all'}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     decelerationRate="normal"
