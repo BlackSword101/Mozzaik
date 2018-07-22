@@ -12,4 +12,8 @@ export const Reducer = createReducer({}, {
         let newState = Object.assign({}, state, {onBackNewProductsScreen: action.onBackNewProductsScreen});
         return newState;
     },
+    [types.PASS_ON_BACK_DAILY_OFFERS_SCREEN](state, action) {
+        let newState = Object.assign({}, state, {onBackDailyOffersScreen: action.onBackDailyOffersScreen});
+        return newState;
+    },
 });

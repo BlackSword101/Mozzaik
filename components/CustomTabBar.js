@@ -69,6 +69,7 @@ class CustomTabBar extends Component {
                         if(Platform.OS !== 'ios') {
                             BackHandler.removeEventListener('hardwareBackPress', this.props.onBackHomeScreen);
                             BackHandler.removeEventListener('hardwareBackPress', this.props.onBackNewProductsScreen);
+                            BackHandler.removeEventListener('hardwareBackPress', this.props.onBackDailyOffersScreen);
                             BackHandler.addEventListener('hardwareBackPress', this.props.onBackHomeScreen);
                         }
                         // navigation.dispatch(backAction);
@@ -87,6 +88,7 @@ class CustomTabBar extends Component {
                         if(Platform.OS !== 'ios') {
                             BackHandler.removeEventListener('hardwareBackPress', this.props.onBackHomeScreen);
                             BackHandler.removeEventListener('hardwareBackPress', this.props.onBackNewProductsScreen);
+                            BackHandler.removeEventListener('hardwareBackPress', this.props.onBackDailyOffersScreen);
                             BackHandler.addEventListener('hardwareBackPress', this.props.onBackNewProductsScreen);
                         }
                         // navigation.dispatch(backAction);
@@ -101,6 +103,12 @@ class CustomTabBar extends Component {
                 return (
                     <TouchableWithoutFeedback style={[styles.item]} key={route.key} onPress={async () => {
                         this._animateBar(index);
+                        if(Platform.OS !== 'ios') {
+                            BackHandler.removeEventListener('hardwareBackPress', this.props.onBackHomeScreen);
+                            BackHandler.removeEventListener('hardwareBackPress', this.props.onBackNewProductsScreen);
+                            BackHandler.removeEventListener('hardwareBackPress', this.props.onBackDailyOffersScreen);
+                            BackHandler.addEventListener('hardwareBackPress', this.props.onBackDailyOffersScreen);
+                        }
                         // navigation.dispatch(backAction);
                         jumpToIndex(index);
                     }}>
@@ -187,7 +195,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         onBackHomeScreen: (typeof state.Reducer.onBackHomeScreen !== "undefined" ? state.Reducer.onBackHomeScreen : 0),
-        onBackNewProductsScreen: (typeof state.Reducer.onBackNewProductsScreen !== "undefined" ? state.Reducer.onBackNewProductsScreen : 0)
+        onBackNewProductsScreen: (typeof state.Reducer.onBackNewProductsScreen !== "undefined" ? state.Reducer.onBackNewProductsScreen : 0),
+        onBackDailyOffersScreen: (typeof state.Reducer.onBackDailyOffersScreen !== "undefined" ? state.Reducer.onBackDailyOffersScreen : 0)
     };
 }
 

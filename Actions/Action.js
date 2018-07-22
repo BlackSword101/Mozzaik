@@ -11,3 +11,9 @@ export function passOnBackNewProductsScreen(value) {
         dispatch({type: types.PASS_ON_BACK_NEW_PRODUCTS_SCREEN, onBackNewProductsScreen: value});
     };
 }
+
+export function passOnBackDailyOffersScreen(value) {
+    return (dispatch) => {
+        dispatch({type: types.PASS_ON_BACK_DAILY_OFFERS_SCREEN, onBackDailyOffersScreen: value});
+    };
+}

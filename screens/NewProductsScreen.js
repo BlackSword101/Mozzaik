@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 // import Page from "../components/Page";
-import {Alert, BackHandler, StyleSheet, View, WebView, Platform} from "react-native";
+import {Alert, BackHandler, StyleSheet, View, Platform} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
@@ -13,7 +13,7 @@ import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
 
 const webViewRef = 'newProductsWebView';
-const defaultUrl = 'https://www.mozzaik.de/ar/new-products';
+const defaultUrl = 'https://www.mozzaik.de/new-products';
 
 class NewProductsScreen extends Component {
 

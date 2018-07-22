@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 // import Page from "../components/Page";
-import {Alert, BackHandler, Platform, StyleSheet, View, WebView} from "react-native";
+import {Alert, BackHandler, Platform, StyleSheet, View} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
