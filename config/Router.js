@@ -20,15 +20,15 @@ const HomeStack = createStackNavigator({
                     swipeEnabled: false,
                 }
             },
-            InfoScreen: {
-                screen: InfoScreen,
-                navigationOptions: ({navigation}) => {
-                    return {
-                        header: null,
-                        swipeEnabled: false,
-                    }
-                },
-            },
+            // InfoScreen: {
+            //     screen: InfoScreen,
+            //     navigationOptions: ({navigation}) => {
+            //         return {
+            //             header: null,
+            //             swipeEnabled: false,
+            //         }
+            //     },
+            // },
             TermsAndConditionScreen : {
                 screen:TermsAndConditionScreen,
                 navigationOptions: ({navigation}) => {
@@ -56,15 +56,15 @@ const ProductsStack = createStackNavigator({
                     swipeEnabled: false,
                 }
             },
-            InfoScreen: {
-                screen: InfoScreen,
-                navigationOptions: ({navigation}) => {
-                    return {
-                        header: null,
-                        swipeEnabled: false,
-                    }
-                },
-            },
+            // InfoScreen: {
+            //     screen: InfoScreen,
+            //     navigationOptions: ({navigation}) => {
+            //         return {
+            //             header: null,
+            //             swipeEnabled: false,
+            //         }
+            //     },
+            // },
             TermsAndConditionScreen : {
                 screen:TermsAndConditionScreen,
                 navigationOptions: ({navigation}) => {
@@ -93,15 +93,15 @@ const OffersStack = createStackNavigator({
                 }
             },
         },
-        InfoScreen: {
-            screen: InfoScreen,
-            navigationOptions: ({navigation}) => {
-                return {
-                    header: null,
-                    swipeEnabled: false,
-                }
-            },
-        },
+        // InfoScreen: {
+        //     screen: InfoScreen,
+        //     navigationOptions: ({navigation}) => {
+        //         return {
+        //             header: null,
+        //             swipeEnabled: false,
+        //         }
+        //     },
+        // },
         TermsAndConditionScreen : {
             screen:TermsAndConditionScreen,
             navigationOptions: ({navigation}) => {
@@ -119,22 +119,22 @@ const OffersStack = createStackNavigator({
     }
 );
 
-// const InfoStack = createStackNavigator({
-//         InfoScreen: {
-//             screen: InfoScreen,
-//             navigationOptions: ({navigation}) => {
-//                 return {
-//                     header: null,
-//                     swipeEnabled: false,
-//                 }
-//             },
-//         },
-//     },
-//     {
-//         mode: 'card',
-//         initialRouteName: 'InfoScreen'
-//     }
-// );
+const InfoStack = createStackNavigator({
+        InfoScreen: {
+            screen: InfoScreen,
+            navigationOptions: ({navigation}) => {
+                return {
+                    header: null,
+                    swipeEnabled: false,
+                }
+            },
+        },
+    },
+    {
+        mode: 'card',
+        initialRouteName: 'InfoScreen'
+    }
+);
 
 const TabNav = TabNavigator(
     {
@@ -178,6 +178,7 @@ export const CreateRootNavigator = (signedIn = false) => {
         {
             // WelcomeScreen: {screen: WelcomeStack},
             Tab: {screen: TabNav},
+            Info: {screen: InfoStack}
         },
         {
             // initialRouteName: signedIn ? "Tab" : "WelcomeScreen",
