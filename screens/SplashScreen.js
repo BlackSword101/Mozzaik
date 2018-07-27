@@ -21,6 +21,7 @@ import {setupRNListener} from 'react-native-redux-listener';
 import {CreateRootNavigator} from "../config/Router";
 import colors from '../theme/colors'
 import AppLoader from "../components/AppLoader";
+import PushNotificationController from "../Controller/PushNotification/PushNotificationController";
 
 I18nManager.allowRTL(false);
 
@@ -87,6 +88,7 @@ export default class SplashScreen extends Component {
             <Provider store={store}>
                 <View style={[styles.container]}>
                     <RootNavigator/>
+                    <PushNotificationController/>
                 </View>
             </Provider>
         )
