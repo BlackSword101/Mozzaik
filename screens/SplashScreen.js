@@ -66,11 +66,17 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount = async () => {
+        //
+        let BadgeAndroid = require('react-native-android-badge');
+        BadgeAndroid.setBadge(parseInt(0));
+
         setTimeout(()=>{
                 this.setState({
                     loading: false
                 });
         }, 1500);
+
+
     };
 
     _renderSplash = () => {

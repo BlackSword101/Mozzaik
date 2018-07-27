@@ -22,7 +22,7 @@ class PushNotificationController extends Component {
         //live keys
         this._SENDER_ID = '365209122432'; //live
         let subscribeKey = 'sub-c-2b8a3d86-8ea4-11e8-b7a4-ce74daf54d52'; //live
-
+        this._messageCount = 0;
         //debug keys
         // if (global.PRODUCTION === false) {
         //     this._SENDER_ID = '1092146930590'; //debug
@@ -62,6 +62,7 @@ class PushNotificationController extends Component {
 
             onNotification: (notification) => {
 
+                console.log(this._messageCount);
 
                 console.log('notification: ', notification);
                 // console.log(AppState.currentState);
@@ -129,17 +130,22 @@ class PushNotificationController extends Component {
                 if (!notification['foreground']) {
                     let messageObject = {};
 
-                    if (Platform.OS === 'ios') {
-                        messageObject = notification['data']['messageObject']//JSON.parse(notification['data']['messageObject'])
-                    } else {
-                        messageObject = JSON.parse(notification['messageObject'])
+
+                    // if (Platform.OS === 'ios') {
+                    //     messageObject = notification['data']['messageObject']//JSON.parse(notification['data']['messageObject'])
+                    // } else {
+                    //     messageObject = JSON.parse(notification['messageObject'])
+                    // }
+
+                    // console.log(Platform.Version );
+                    // console.log(Platform.OS );
+                    //
+                    if (Platform.OS !== 'ios' && Platform.Version < 26) {
+                        this._messageCount++;
+                        let BadgeAndroid = require('react-native-android-badge');
+                        BadgeAndroid.setBadge(parseInt(this._messageCount));
                     }
 
-                    // if (Platform.OS !== 'ios' && Platform.Version < 26) {
-                    //     let BadgeAndroid = require('react-native-android-badge');
-                    //     BadgeAndroid.setBadge(parseInt(notification['badge']));
-                    // }
-                    //
 
                     //DeepLink
                     // switch (messageObject.object.type) {
