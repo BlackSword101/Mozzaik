@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {PushNotificationIOS} from 'react-native';
+import {PushNotificationIOS, Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PubNubReact from "pubnub-react";
 // import BadgeAndroid from 'react-native-android-badge';
@@ -10,8 +10,6 @@ import PubNubReact from "pubnub-react";
 import * as ActionCreators from "../../Actions/Action";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {Platform} from "react-native";
-
 
 class PushNotificationController extends Component {
 
@@ -41,14 +39,21 @@ class PushNotificationController extends Component {
     };
 
     async componentDidMount () {
-        this._enablePushNotification();
+        this._enablePushNotification(this.props.channel);
         // this.props.navigation.navigate('MyAccount');
         // this.props.passDeleteAllDevicesInChannels(() => {
         //     this._deleteAllDevicesInChannels()
         // });
     };
 
-    _enablePushNotification = () => {
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.channel !== this.props.channel) {
+            this._deleteAllDevicesInChannels();
+            this._enablePushNotification(nextProps.channel);
+        }
+    }
+
+    _enablePushNotification = (channel) => {
 
         const options = {
             // (optional) Called when Token is generated (iOS and Android)
@@ -56,7 +61,7 @@ class PushNotificationController extends Component {
                 // console.log(token);
                 this._TOKEN = token.token;
                 // console.log(this._deleteAllDevicesInChannels());
-                this._addToPushChannels();
+                this._addToPushChannels(channel);
                 // this._removeUserFromPubNubChannels(userID);
             },
 
@@ -201,9 +206,9 @@ class PushNotificationController extends Component {
 
     //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     //Enable push notifications on provided set of channels.
-    _addToPushChannels = () => {
+    _addToPushChannels = (channel) => {
         const addChannelsOptions = {
-            channels: [`mozzaik_push_notification_channel`],
+            channels: [channel], //array
             device: this._TOKEN,
             pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
         };
@@ -216,6 +221,7 @@ class PushNotificationController extends Component {
             }
         };
         this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
+        this._listingChannelsForDevice();
     };
 
     //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push
@@ -242,14 +248,40 @@ class PushNotificationController extends Component {
         return this.pubnub.push.deleteDevice(deleteDeviceOptions, deleteDeviceFunction);
     };
 
+    //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#listing-channels-device
+    //Request for all channels on which push notification has been enabled using specified pushToken
+    _listingChannelsForDevice = () => {
+
+        const listChannelsOptions = {
+            device: this._TOKEN,
+            pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
+        };
+
+        const listChannelsFunction = (status, response) => {
+
+            if (status.error) {
+                // console.log("operation failed w/ error:", status);
+                return;
+            }
+
+            // console.log("listing push channel for device");
+            response.channels.forEach(function (channel) {
+                console.log(channel)
+            })
+        };
+
+        this.pubnub.push.listChannels(listChannelsOptions, listChannelsFunction);
+
+    };
+
     render() {
         return null;
     };
 }
 
 PushNotificationController.defaultProps = {
-    loggedInUserID: 0,
-    navigation: null
+    navigation: null,
+    channel: 'mozzaik_all_users_channel'
 };
 
 //this line for bind all the actions in the ActionCreators "Actions.js" to this screen and use it like this.props.toggleLoader(true)

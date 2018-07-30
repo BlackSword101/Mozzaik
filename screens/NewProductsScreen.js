@@ -7,10 +7,12 @@ import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
 import colors from "../theme/colors";
+import PushNotificationController from "../Controller/PushNotification/PushNotificationController";
 
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
+import CookieManager from "react-native-cookies";
 
 const webViewRef = 'newProductsWebView';
 const defaultUrl = 'https://www.mozzaik.de/new-products';
@@ -40,10 +42,22 @@ class NewProductsScreen extends Component {
         }
     }
 
-    _onNewProductsNavigationStateChange = (navState) => {
+    _onNewProductsNavigationStateChange = async (navState) => {
         // console.log(navState);
         // console.log(navState.canGoBack);
         //console.log(navState);
+
+        await CookieManager.get(defaultUrl)
+            .then( async (res) => {
+                if(res.id_customer !== undefined && res.id_customer !== 'undefined' && res.id_customer !== "undefined" && res.id_customer !== null) {
+                    this._channel = `mozzaik_user_${res.id_customer}`;
+                } else {
+                    this._channel = `mozzaik_all_users_channel`;
+                }
+                // console.log('CookieManager.get =>', res); // => 'user_session=abcdefg; path=/;'
+                //console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
+            });
+
         this.setState({
             canGoBackNewProductsScreen: navState.canGoBack,
         });
@@ -93,6 +107,7 @@ class NewProductsScreen extends Component {
                         this.setState({loading: false});
                     }}
                 />
+                <PushNotificationController channel={this._channel}/>
             </View>
         );
     };

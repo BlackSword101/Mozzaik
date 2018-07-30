@@ -7,10 +7,13 @@ import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
 import colors from "../theme/colors";
+import PushNotificationController from "../Controller/PushNotification/PushNotificationController";
 
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
+import CookieManager from 'react-native-cookies';
+
 
 const webViewRef = 'homeWebView';
 const defaultUrl = 'https://www.mozzaik.de/';
@@ -32,6 +35,17 @@ class HomeScreen extends Component {
         if(Platform.OS !== 'ios') {
             this.props.passOnBackHomeScreen(this.onBackHomeScreen);
         }
+
+        // Get cookies as a request header string
+        // CookieManager.get(defaultUrl)
+        //     .then((res) => {
+        //         console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
+        //     });
+
+        // CookieManager.clearAll()
+        //     .then((res) => {
+        //         console.log('CookieManager.clearAll =>', res);
+        //     });
     }
 
     componentWillUnmount() {
@@ -40,8 +54,19 @@ class HomeScreen extends Component {
         }
     }
 
-    _onHomeNavigationStateChange = (navState) => {
-        // console.log(navState);
+    _onHomeNavigationStateChange = async (navState) => {
+        // console.log('navState: ', navState);
+
+        await CookieManager.get(defaultUrl)
+            .then( async (res) => {
+                if(res.id_customer !== undefined && res.id_customer !== 'undefined' && res.id_customer !== "undefined" && res.id_customer !== null) {
+                    this._channel = `mozzaik_user_${res.id_customer}`;
+                } else {
+                    this._channel = `mozzaik_all_users_channel`;
+                }
+                // console.log('CookieManager.get =>', res); // => 'user_session=abcdefg; path=/;'
+                //console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
+            });
         // console.log(navState.canGoBack);
 
         this.setState({
@@ -66,12 +91,13 @@ class HomeScreen extends Component {
         }
     };
 
-
     _renderApp = () => {
         return (
             <View style={[styles.appContainer]}>
                 <WKWebView
                     //style={{flex: 1}}
+                    injectedJavaScript={'(function(){return  console.log("Send me back!")}());'}
+                    // onMessage={(event)=> console.log(event.nativeEvent.data)}
                     ref={webViewRef}
                     allowsBackForwardNavigationGestures={true}
                     bounces={false}
@@ -89,11 +115,16 @@ class HomeScreen extends Component {
                         this.props.navigation.setParams({fade: true});
                         this.setState({loading: true});
                     }}
-                    onLoadEnd={()=>{
+                    onLoadEnd={(event)=>{
+
+                        // const { data } = event.nativeEvent;
+                        // const cookies  = data.split(';'); // `csrftoken=...; rur=...; mid=...; somethingelse=...`
+                        // console.log(cookies);
                         this.props.navigation.setParams({fade: false});
                         this.setState({loading: false});
                     }}
                 />
+                <PushNotificationController channel={this._channel}/>
             </View>
         );
     };
