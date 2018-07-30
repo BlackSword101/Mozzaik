@@ -67,9 +67,9 @@ class PushNotificationController extends Component {
 
             onNotification: (notification) => {
 
-                console.log(this._messageCount);
+                // console.log(this._messageCount);
 
-                console.log('notification: ', notification);
+                // console.log('notification: ', notification);
                 // console.log(AppState.currentState);
 
                 // const BadgeAndroid = require('react-native-android-badge');
