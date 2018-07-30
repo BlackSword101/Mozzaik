@@ -57,6 +57,9 @@ class HomeScreen extends Component {
     _onHomeNavigationStateChange = async (navState) => {
         // console.log('navState: ', navState);
 
+        //first time open the app will subscribe to mozzaik_all_users_channel
+        //when login will subscribe to `mozzaik_user_${res.id_customer}`
+        //when logout will still subscribe to `mozzaik_user_${res.id_customer}`
         await CookieManager.get(defaultUrl)
             .then( async (res) => {
                 if(res.id_customer !== undefined && res.id_customer !== 'undefined' && res.id_customer !== "undefined" && res.id_customer !== null) {
