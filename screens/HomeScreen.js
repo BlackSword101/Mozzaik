@@ -62,8 +62,8 @@ class HomeScreen extends Component {
         //when logout will still subscribe to `mozzaik_user_${res.id_customer}`
         await CookieManager.get(defaultUrl)
             .then( async (res) => {
-                if(res.id_customer !== undefined && res.id_customer !== 'undefined' && res.id_customer !== "undefined" && res.id_customer !== null) {
-                    this._channel = `mozzaik_user_${res.id_customer}`;
+                if(res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
+                    this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
                 } else {
                     this._channel = `mozzaik_all_users_channel`;
                 }
