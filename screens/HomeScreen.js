@@ -62,6 +62,7 @@ class HomeScreen extends Component {
         //when logout will still subscribe to `mozzaik_user_${res.id_customer}`
         await CookieManager.get(defaultUrl)
             .then( async (res) => {
+                console.log(res);
                 if(res.id_customer !== undefined && res.id_customer !== 'undefined' && res.id_customer !== "undefined" && res.id_customer !== null) {
                     this._channel = `mozzaik_user_${res.id_customer}`;
                 } else {

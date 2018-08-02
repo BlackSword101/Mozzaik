@@ -67,8 +67,10 @@ export default class SplashScreen extends Component {
 
     componentDidMount = async () => {
         //
-        let BadgeAndroid = require('react-native-android-badge');
-        BadgeAndroid.setBadge(parseInt(0));
+        if(Platform.OS === 'android') {
+            let BadgeAndroid = require('react-native-android-badge');
+            BadgeAndroid.setBadge(parseInt(0));
+        }
 
         setTimeout(()=>{
                 this.setState({
