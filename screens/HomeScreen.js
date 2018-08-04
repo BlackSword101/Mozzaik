@@ -1,7 +1,6 @@
 'use strict';
 
 import React, {Component} from 'react';
-// import Page from "../components/Page";
 import {Alert, BackHandler, Platform, StyleSheet, View} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
@@ -13,6 +12,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
 import CookieManager from 'react-native-cookies';
+import Helpers from "../Lib/Helpers";
 
 
 const webViewRef = 'homeWebView';
@@ -35,17 +35,6 @@ class HomeScreen extends Component {
         if(Platform.OS !== 'ios') {
             this.props.passOnBackHomeScreen(this.onBackHomeScreen);
         }
-
-        // Get cookies as a request header string
-        // CookieManager.get(defaultUrl)
-        //     .then((res) => {
-        //         console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
-        //     });
-
-        // CookieManager.clearAll()
-        //     .then((res) => {
-        //         console.log('CookieManager.clearAll =>', res);
-        //     });
     }
 
     componentWillUnmount() {
@@ -55,22 +44,29 @@ class HomeScreen extends Component {
     }
 
     _onHomeNavigationStateChange = async (navState) => {
-        // console.log('navState: ', navState);
 
         //first time open the app will subscribe to mozzaik_all_users_channel
         //when login will subscribe to `mozzaik_user_${res.id_customer}`
         //when logout will still subscribe to `mozzaik_user_${res.id_customer}`
-        await CookieManager.get(defaultUrl)
-            .then( async (res) => {
-                if(res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
-                    this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
-                } else {
-                    this._channel = `mozzaik_all_users_channel`;
-                }
-                // console.log('CookieManager.get =>', res); // => 'user_session=abcdefg; path=/;'
-                //console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
-            });
-        // console.log(navState.canGoBack);
+
+        if(Platform.OS === 'android') {
+            await CookieManager.get(defaultUrl)
+                .then(async (res) => {
+                    if (res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
+                        this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
+                    } else {
+                        this._channel = `mozzaik_all_users_channel`;
+                    }
+                });
+        } else if(Platform.OS === 'ios') {
+            let id_lang = Helpers._getParameterByName('id_lang', navState.url);
+            let id_customer = Helpers._getParameterByName('id_customer', navState.url);
+            if (id_lang !== undefined && id_lang !== 'undefined' && id_lang !== "undefined" && id_lang !== null) {
+                this._channel = `mozzaik_notifications_lang_${id_lang}`;
+            } else {
+                this._channel = `mozzaik_all_users_channel`;
+            }
+        }
 
         this.setState({
             canGoBackHomeScreen: navState.canGoBack,
@@ -98,16 +94,17 @@ class HomeScreen extends Component {
         return (
             <View style={[styles.appContainer]}>
                 <WKWebView
+                    source={{uri: defaultUrl}}
+                    sendCookies={true}
+                    useWKCookieStore={true}
+                    javaScriptEnabled={true}
                     //style={{flex: 1}}
-                    injectedJavaScript={'(function(){return  console.log("Send me back!")}());'}
-                    // onMessage={(event)=> console.log(event.nativeEvent.data)}
+                    injectedJavaScript={Helpers._iosCookiesJsCode()}
                     ref={webViewRef}
                     allowsBackForwardNavigationGestures={true}
                     bounces={false}
                     automaticallyAdjustContentInsets={false}
                     dataDetectorTypes={'all'}
-                    source={{uri: defaultUrl}}
-                    javaScriptEnabled={true}
                     domStorageEnabled={true}
                     decelerationRate={'normal'}
                     startInLoadingState={true}
@@ -119,10 +116,6 @@ class HomeScreen extends Component {
                         this.setState({loading: true});
                     }}
                     onLoadEnd={(event)=>{
-
-                        // const { data } = event.nativeEvent;
-                        // const cookies  = data.split(';'); // `csrftoken=...; rur=...; mid=...; somethingelse=...`
-                        // console.log(cookies);
                         this.props.navigation.setParams({fade: false});
                         this.setState({loading: false});
                     }}

@@ -12,6 +12,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
 import CookieManager from "react-native-cookies";
+import Helpers from "../Lib/Helpers";
 
 const webViewRef = 'DailyOffersWebView';
 const defaultUrl = 'https://www.mozzaik.de/daily-offers';
@@ -43,16 +44,24 @@ class NewOffersScreen extends Component {
 
     _onDailyOffersNavigationStateChange = async (navState) => {
 
-        await CookieManager.get(defaultUrl)
-            .then( async (res) => {
-                if(res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
-                    this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
-                } else {
-                    this._channel = `mozzaik_all_users_channel`;
-                }
-                // console.log('CookieManager.get =>', res); // => 'user_session=abcdefg; path=/;'
-                //console.log('CookieManager.get =>', res.id_customer); // => 'user_session=abcdefg; path=/;'
-            });
+        if(Platform.OS === 'android') {
+            await CookieManager.get(defaultUrl)
+                .then(async (res) => {
+                    if (res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
+                        this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
+                    } else {
+                        this._channel = `mozzaik_all_users_channel`;
+                    }
+                });
+        } else if(Platform.OS === 'ios') {
+            let id_lang = Helpers._getParameterByName('id_lang', navState.url);
+            let id_customer = Helpers._getParameterByName('id_customer', navState.url);
+            if (id_lang !== undefined && id_lang !== 'undefined' && id_lang !== "undefined" && id_lang !== null) {
+                this._channel = `mozzaik_notifications_lang_${id_lang}`;
+            } else {
+                this._channel = `mozzaik_all_users_channel`;
+            }
+        }
 
         this.setState({
             canGoBackDailyOffersScreen: navState.canGoBack,
@@ -81,13 +90,16 @@ class NewOffersScreen extends Component {
             <View style={[styles.appContainer]}>
                 <WKWebView
                     //style={{flex: 1}}
+                    source={{uri: defaultUrl}}
+                    sendCookies={true}
+                    useWKCookieStore={true}
+                    javaScriptEnabled={true}
+                    injectedJavaScript={Helpers._iosCookiesJsCode()}
                     ref={webViewRef}
                     allowsBackForwardNavigationGestures={true}
                     bounces={false}
                     automaticallyAdjustContentInsets={false}
-                    source={{uri: defaultUrl}}
                     dataDetectorTypes={'all'}
-                    javaScriptEnabled={true}
                     domStorageEnabled={true}
                     decelerationRate="normal"
                     startInLoadingState={true}

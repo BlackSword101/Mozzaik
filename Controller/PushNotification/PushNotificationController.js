@@ -47,6 +47,9 @@ class PushNotificationController extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+        // console.log('nextProps.channel :', nextProps.channel );
+        // console.log('this.props.channel :', this.props.channel );
+
         if(nextProps.channel !== this.props.channel) {
             this._deleteAllDevicesInChannels();
             this._enablePushNotification(nextProps.channel);
@@ -55,10 +58,12 @@ class PushNotificationController extends Component {
 
     _enablePushNotification = (channel) => {
 
+        // console.log('_enablePushNotification :', channel);
+        // console.log('this._TOKEN :', this._TOKEN);
         const options = {
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: (token) => {
-                // console.log(token);
+                // console.log('token:', token);
                 this._TOKEN = token.token;
                 // console.log(this._deleteAllDevicesInChannels());
                 this._addToPushChannels(channel);
@@ -67,111 +72,20 @@ class PushNotificationController extends Component {
 
             onNotification: (notification) => {
 
-                // console.log(this._messageCount);
-
-                // console.log('notification: ', notification);
-                // console.log(AppState.currentState);
-
                 // const BadgeAndroid = require('react-native-android-badge');
                 if (notification['foreground']) {
-
-                    // let messageObject = {};
-
-                    // if (Platform.OS === 'ios') {
-                    //     messageObject = notification['data']['messageObject']//JSON.parse(notification['data']['messageObject'])
-                    // } else {
-                    //     messageObject = JSON.parse(notification['messageObject'])
-                    // }
-
-                    // if (Platform.OS === 'ios') {
-                    //     // Notification
-                    //     if (parseInt(notification['data']['user_id']) === parseInt(userID)) {
-                    //         this.props.increaseNotificationCount(notification['data']['badge']);
-                    //     }
-                    // }
-                    // else {
-                    //     // Notification
-                    //     if (parseInt(notification['user_id']) === parseInt(userID)) {
-                    //         this.props.increaseNotificationCount(notification['badge']);
-                    //     }
-                    // }
-
-                    // Notification
-                    // switch (messageObject.action) {
-                    //     case APP_ACTIONS.likePost:
-                    //         this.props.udpatePostLikesCount(APP_ACTIONS.likePost, messageObject.object.id, messageObject.object.likes_count);
-                    //         break;
-                    //     case APP_ACTIONS.likeArticle:
-                    //         this.props.udpatePostLikesCount(APP_ACTIONS.likeArticle, messageObject.object.id, messageObject.object.likes_count);
-                    //         break;
-                    //     case APP_ACTIONS.unlikePost:
-                    //         this.props.udpatePostLikesCount(APP_ACTIONS.unlikePost, messageObject.object.id, messageObject.object.likes_count);
-                    //         break;
-                    //     case APP_ACTIONS.unlikeArticle:
-                    //         this.props.udpatePostLikesCount(APP_ACTIONS.unlikeArticle, messageObject.object.id, messageObject.object.likes_count);
-                    //         break;
-                    //     case APP_ACTIONS.createPostComment:
-                    //         this.props.updatePostCommentCount(APP_ACTIONS.createPostComment, messageObject.object.id, messageObject.object.comments_count);
-                    //         break;
-                    //     case APP_ACTIONS.deletePostComment:
-                    //         this.props.updatePostCommentCount(APP_ACTIONS.deletePostComment, messageObject.object.id, messageObject.object.comments_count);
-                    //         break;
-                    //     case APP_ACTIONS.createArticleComment:
-                    //         this.props.updatePostCommentCount(APP_ACTIONS.createArticleComment, messageObject.object.id, messageObject.object.comments_count);
-                    //         break;
-                    //     case APP_ACTIONS.deleteArticleComment:
-                    //         this.props.updatePostCommentCount(APP_ACTIONS.createArticleComment, messageObject.object.id, messageObject.object.comments_count);
-                    //         break;
-                    //     case APP_ACTIONS.editPost:
-                    //         // console.log(messageObject);
-                    //         // console.log(notification);
-                    //         this.props.updatePost(APP_ACTIONS.editPost, messageObject.object);
-                    //         break;
-                    // }
 
                 }
 
                 //Notification from the background or when the app is killed
                 if (!notification['foreground']) {
-                    let messageObject = {};
 
-
-                    // if (Platform.OS === 'ios') {
-                    //     messageObject = notification['data']['messageObject']//JSON.parse(notification['data']['messageObject'])
-                    // } else {
-                    //     messageObject = JSON.parse(notification['messageObject'])
-                    // }
-
-                    // console.log(Platform.Version );
-                    // console.log(Platform.OS );
-                    //
                     if (Platform.OS !== 'ios' && Platform.Version < 26) {
                         this._messageCount++;
                         let BadgeAndroid = require('react-native-android-badge');
                         BadgeAndroid.setBadge(parseInt(this._messageCount));
                     }
-
-
-                    //DeepLink
-                    // switch (messageObject.object.type) {
-                    //     case 'post':
-                    //         this.props.navigation.navigate('SinglePost', {id: messageObject.object.id});
-                    //         break;
-                    //     case 'article':
-                    //         this.props.navigation.navigate('SingleArticle', {id: messageObject.object.id});
-                    //         break;
-                    //     case 'place':
-                    //         this.props.navigation.navigate('PlaceDetails', {id: messageObject.object.id});
-                    //         break;
-                    //     case 'event':
-                    //         this.props.navigation.navigate('EventDetails', {id: messageObject.object.id});
-                    //         break;
-                    //     case 'user':
-                    //         this.props.navigation.navigate('User', {id: messageObject.object.id});
-                    //         break;
-                    // }
                 }
-
 
                 // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
                 notification.finish(PushNotificationIOS.FetchResult.NewData);
@@ -207,6 +121,7 @@ class PushNotificationController extends Component {
     //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     //Enable push notifications on provided set of channels.
     _addToPushChannels = (channel) => {
+        // console.log('channel: ', channel);
         const addChannelsOptions = {
             channels: [channel], //array
             device: this._TOKEN,
