@@ -38,7 +38,8 @@ class PushNotificationController extends Component {
 
     };
 
-    async componentDidMount () {
+    componentDidMount () {
+
         this._enablePushNotification(this.props.channel);
         // this.props.navigation.navigate('MyAccount');
         // this.props.passDeleteAllDevicesInChannels(() => {
@@ -58,16 +59,14 @@ class PushNotificationController extends Component {
 
     _enablePushNotification = (channel) => {
 
+        console.log(this._SENDER_ID);
         // console.log('_enablePushNotification :', channel);
         // console.log('this._TOKEN :', this._TOKEN);
         const options = {
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: (token) => {
-                // console.log('token:', token);
                 this._TOKEN = token.token;
-                // console.log(this._deleteAllDevicesInChannels());
-                this._addToPushChannels(channel);
-                // this._removeUserFromPubNubChannels(userID);
+                // this._addToPushChannels(channel);
             },
 
             onNotification: (notification) => {
@@ -117,30 +116,30 @@ class PushNotificationController extends Component {
 
         PushNotification.configure(options);
     };
-
-    //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
-    //Enable push notifications on provided set of channels.
-    _addToPushChannels = (channel) => {
-        // console.log('channel: ', channel);
-        const addChannelsOptions = {
-            channels: [channel], //array
-            device: this._TOKEN,
-            pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
-        };
-        const addChannelsFunction = (status) => {
-            if (status.error) {
-                console.log("operation failed w/ error:", status);
-            } else {
-                console.log("operation done!");
-                // this._subscribeToChannels(userID);
-            }
-        };
-        this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
-        this._listingChannelsForDevice();
-    };
-
-    //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push
-    //Disable push notifications from all channels which is registered with specified pushToken
+    //
+    // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
+    // //Enable push notifications on provided set of channels.
+    // _addToPushChannels = (channel) => {
+    //     // console.log('channel: ', channel);
+    //     const addChannelsOptions = {
+    //         channels: [channel], //array
+    //         device: this._TOKEN,
+    //         pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
+    //     };
+    //     const addChannelsFunction = (status) => {
+    //         if (status.error) {
+    //             console.log("operation failed w/ error:", status);
+    //         } else {
+    //             console.log("operation done!");
+    //             // this._subscribeToChannels(userID);
+    //         }
+    //     };
+    //     this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
+    //     this._listingChannelsForDevice();
+    // };
+    //
+    // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push
+    // //Disable push notifications from all channels which is registered with specified pushToken
     _deleteAllDevicesInChannels = () => {
 
         const deleteDeviceOptions = {
@@ -162,9 +161,9 @@ class PushNotificationController extends Component {
 
         return this.pubnub.push.deleteDevice(deleteDeviceOptions, deleteDeviceFunction);
     };
-
-    //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#listing-channels-device
-    //Request for all channels on which push notification has been enabled using specified pushToken
+    //
+    // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#listing-channels-device
+    // //Request for all channels on which push notification has been enabled using specified pushToken
     _listingChannelsForDevice = () => {
 
         const listChannelsOptions = {
@@ -206,7 +205,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        navigation: (typeof state.Reducer.navigation !== "undefined" ? state.Reducer.navigation : null),
+        // navigation: (typeof state.Reducer.navigation !== "undefined" ? state.Reducer.navigation : null),
     };
 }
 
