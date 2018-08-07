@@ -38,7 +38,7 @@ function configureStore(initialState) {
         }),
         applyMiddleware(
             thunkMiddleware, // lets us dispatch() functions
-            loggerMiddleware
+            // loggerMiddleware
         ),
     );
 

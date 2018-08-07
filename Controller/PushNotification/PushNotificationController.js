@@ -39,7 +39,7 @@ class PushNotificationController extends Component {
     };
 
     componentDidMount () {
-
+        // console.log(this.props.channel);
         this._enablePushNotification(this.props.channel);
         // this.props.navigation.navigate('MyAccount');
         // this.props.passDeleteAllDevicesInChannels(() => {
@@ -66,7 +66,7 @@ class PushNotificationController extends Component {
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: (token) => {
                 this._TOKEN = token.token;
-                // this._addToPushChannels(channel);
+                this._addToPushChannels(channel);
             },
 
             onNotification: (notification) => {
@@ -119,25 +119,25 @@ class PushNotificationController extends Component {
     //
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     // //Enable push notifications on provided set of channels.
-    // _addToPushChannels = (channel) => {
-    //     // console.log('channel: ', channel);
-    //     const addChannelsOptions = {
-    //         channels: [channel], //array
-    //         device: this._TOKEN,
-    //         pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
-    //     };
-    //     const addChannelsFunction = (status) => {
-    //         if (status.error) {
-    //             console.log("operation failed w/ error:", status);
-    //         } else {
-    //             console.log("operation done!");
-    //             // this._subscribeToChannels(userID);
-    //         }
-    //     };
-    //     this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
-    //     this._listingChannelsForDevice();
-    // };
-    //
+    _addToPushChannels = (channel) => {
+        // console.log('channel: ', channel);
+        const addChannelsOptions = {
+            channels: [channel], //array
+            device: this._TOKEN,
+            pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
+        };
+        const addChannelsFunction = (status) => {
+            if (status.error) {
+                console.log("operation failed w/ error:", status);
+            } else {
+                console.log("operation done!");
+                // this._subscribeToChannels(userID);
+            }
+        };
+        this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
+        this._listingChannelsForDevice();
+    };
+
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push
     // //Disable push notifications from all channels which is registered with specified pushToken
     _deleteAllDevicesInChannels = () => {
