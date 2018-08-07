@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, Linking} from "react-native";
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, Linking, Platform} from "react-native";
 import colors from "../theme/colors";
 import Header from "../components/Header";
 import ModalWrapper from "react-native-modal-wrapper";
@@ -126,6 +126,9 @@ export default class InfoScreen extends Component {
                             }
                         },
                     ]}
+
+                    contentContainerStyle={{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}}
+                    bounce={false}
                     getItemLayout={(data, index) => ({length: 75, offset: 75 * index, index})}
                     renderItem={this._renderItem}
                 />

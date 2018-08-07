@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, View,Platform, Dimensions} from "react-native";
 import Header from "../components/Header";
 import colors from "../theme/colors";
 
@@ -15,7 +15,9 @@ export default class TermsAndConditionScreen extends Component {
         return (
             <View style={[styles.container]}>
                 <Header canGoBack={true} onBackPress={()=> this.props.navigation.goBack()} navigation={this.props.navigation}/>
-                <ScrollView style={{padding: 15}}>
+                <ScrollView
+                    style={{padding: 15,  marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}}
+                >
                     <Text style={[styles.text]}>
                         {'GENERAL TERMS AND CONDITIONS FOR SHOPPING IN ONLINESHOP MOZZAIK.DE\n' +
                         '\n' +
