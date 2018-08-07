@@ -25,8 +25,10 @@ export default class Helpers {
                 }
                 var id_lang = readCookie('id_lang').toString();
                 var id_customer = readCookie('id_customer').toString();
+                var nb_products = readCookie('nb_products').toString();
+                var nb_offers = readCookie('nb_offers').toString();
                 if (history.pushState) {
-                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id_lang='+id_lang+'&id_customer='+id_customer;
+                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id_lang='+id_lang+'&id_customer='+id_customer+'&nb_products='+nb_products+'&nb_offers='+nb_offers;
                     window.history.pushState({path:newurl},'',newurl);
                 }`;
     }

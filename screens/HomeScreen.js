@@ -45,6 +45,7 @@ class HomeScreen extends Component {
 
     _onHomeNavigationStateChange = async (navState) => {
 
+
         //first time open the app will subscribe to mozzaik_all_users_channel
         //when login will subscribe to `mozzaik_user_${res.id_customer}`
         //when logout will still subscribe to `mozzaik_user_${res.id_customer}`
@@ -57,14 +58,40 @@ class HomeScreen extends Component {
                     } else {
                         this._channel = `mozzaik_all_users_channel`;
                     }
+
+                    if (res.nb_products !== undefined && res.nb_products !== 'undefined' && res.nb_products !== "undefined" && res.nb_products !== null) {
+                        this.props.setNewProductsCount(res.nb_products);
+                    } else {
+                        this.props.setNewProductsCount(0);
+                    }
+
+                    if (res.nb_offers !== undefined && res.nb_offers !== 'undefined' && res.nb_offers !== "undefined" && res.nb_offers !== null) {
+                        this.props.setNewOffersCount(res.nb_offers);
+                    } else {
+                        this.props.setNewOffersCount(0);
+                    }
                 });
         } else if(Platform.OS === 'ios') {
             let id_lang = Helpers._getParameterByName('id_lang', navState.url);
             let id_customer = Helpers._getParameterByName('id_customer', navState.url);
+            let nb_products = Helpers._getParameterByName('nb_products', navState.url);
+            let nb_offers = Helpers._getParameterByName('nb_offers', navState.url);
             if (id_lang !== undefined && id_lang !== 'undefined' && id_lang !== "undefined" && id_lang !== null) {
                 this._channel = `mozzaik_notifications_lang_${id_lang}`;
             } else {
                 this._channel = `mozzaik_all_users_channel`;
+            }
+
+            if (nb_products !== undefined && nb_products !== 'undefined' && nb_products !== "undefined" && nb_products !== null) {
+                this.props.setNewProductsCount(nb_products);
+            } else {
+                this.props.setNewProductsCount(0);
+            }
+
+            if (nb_offers !== undefined && nb_offers !== 'undefined' && nb_offers !== "undefined" && nb_offers !== null) {
+                this.props.setNewOffersCount(nb_offers);
+            } else {
+                this.props.setNewOffersCount(0);
             }
         }
 

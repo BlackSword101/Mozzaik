@@ -9,7 +9,9 @@ import {
     TouchableWithoutFeedback,
     Platform,
     Dimensions,
-    BackHandler
+    BackHandler,
+    Text,
+    PixelRatio
 } from 'react-native';
 import colors from "../theme/colors";
 
@@ -94,8 +96,31 @@ class CustomTabBar extends Component {
                         // navigation.dispatch(backAction);
                         jumpToIndex(index);
                     }}>
-                        <View style={styles.item}>
+                        <View style={[styles.item, {}]}>
                             <Image style={[styles.newProductsIcon,{tintColor: tintColor}]} source={require('../components/img/new_products_0.png')}/>
+                            {/*<View style={{position:'absolute', backgroundColor:colors.orange, top:25, bottom:0 , right:38, width:18, height:18, borderRadius:11, justifyContent:'center', alignItems:'center'}}>*/}
+                                {/*<Text style={{color:'#ffffff', fontSize:8}}>{'70'}</Text>*/}
+                            {/*</View>*/}
+                            {(
+                                this.props.newProductsCount ?
+                                    <View style={{
+                                        position: 'absolute',
+                                        backgroundColor: colors.green,
+                                        top: 1,
+                                        bottom: 0,
+                                        right: '31%',
+                                        width: 18,
+                                        height: 18,
+                                        borderRadius: 11,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <Text style={{color:'#ffffff', fontSize:8}}>{this.props.newProductsCount}</Text>
+                                    </View>
+                                    :
+                                    null
+                            )}
+
                         </View>
                     </TouchableWithoutFeedback>
                 );
@@ -114,6 +139,26 @@ class CustomTabBar extends Component {
                     }}>
                         <View style={styles.item}>
                             <Image style={[styles.newOffersIcon, {tintColor: tintColor}]} source={require('../components/img/discount.png')}/>
+                            {(
+                                this.props.newOffersCount ?
+                                    <View style={{
+                                        position: 'absolute',
+                                        backgroundColor: colors.orange,
+                                        top: 1,
+                                        bottom: 0,
+                                        right: '26%',
+                                        width: 18,
+                                        height: 18,
+                                        borderRadius: 11,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <Text style={{color: '#ffffff', fontSize: 8}}>{this.props.newOffersCount}</Text>
+                                    </View>
+                                    :
+                                    null
+                            )}
+
                         </View>
                     </TouchableWithoutFeedback>
                 );
@@ -124,20 +169,24 @@ class CustomTabBar extends Component {
         const {navigation, renderIcon, activeTintColor, inactiveTintColor, jumpToIndex} = this.props;
         const {routes} = navigation.state;
         return (
-            <View style={[styles.row]}>
-                {routes && routes.map((route, index) => {
-                    return (this._renderItem(route, index, navigation, jumpToIndex))
-                })}
-                <Animated.View style={{
-                    width: Dimensions.get('window').width / ITEMS_NUMBER,
-                    position: 'absolute',
-                    left: this._left,
-                    bottom: (Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 28 : 0,
-                    height: 4,
-                    backgroundColor: colors.orange,
-                    zIndex: 1,
-                }}/>
-                {this.state.fade ? <Animated.View style={[styles.fade]}/> : null}
+            <View>
+                {/*<View style={{height: 2, width: '100%', backgroundColor: colors.orange}}/>*/}
+                <View style={[styles.row]}>
+                    {routes && routes.map((route, index) => {
+                        return (this._renderItem(route, index, navigation, jumpToIndex))
+                    })}
+
+                    <Animated.View style={{
+                        width: Dimensions.get('window').width / ITEMS_NUMBER,
+                        position: 'absolute',
+                        left: this._left,
+                        bottom: (Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 28 : 0,
+                        height: 4,
+                        backgroundColor: colors.orange,
+                        zIndex: 1,
+                    }}/>
+                    {this.state.fade ? <Animated.View style={[styles.fade]}/> : null}
+                </View>
             </View>
         )
     }
@@ -149,6 +198,7 @@ const styles = StyleSheet.create({
         position:'relative'
     },
     item: {
+        position:'relative',
         justifyContent: 'center',
         width: Dimensions.get('window').width / ITEMS_NUMBER,
         height: 45,
@@ -196,7 +246,10 @@ function mapStateToProps(state) {
     return {
         onBackHomeScreen: (typeof state.Reducer.onBackHomeScreen !== "undefined" ? state.Reducer.onBackHomeScreen : 0),
         onBackNewProductsScreen: (typeof state.Reducer.onBackNewProductsScreen !== "undefined" ? state.Reducer.onBackNewProductsScreen : 0),
-        onBackDailyOffersScreen: (typeof state.Reducer.onBackDailyOffersScreen !== "undefined" ? state.Reducer.onBackDailyOffersScreen : 0)
+        onBackDailyOffersScreen: (typeof state.Reducer.onBackDailyOffersScreen !== "undefined" ? state.Reducer.onBackDailyOffersScreen : 0),
+        newProductsCount: (typeof state.Reducer.newProductsCount !== "undefined" ? state.Reducer.newProductsCount : 0),
+        newOffersCount: (typeof state.Reducer.newOffersCount !== "undefined" ? state.Reducer.newOffersCount : 0),
+
     };
 }
 

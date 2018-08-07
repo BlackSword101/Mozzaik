@@ -17,3 +17,15 @@ export function passOnBackDailyOffersScreen(value) {
         dispatch({type: types.PASS_ON_BACK_DAILY_OFFERS_SCREEN, onBackDailyOffersScreen: value});
     };
 }
+
+export function setNewProductsCount(value) {
+    return (dispatch) => {
+        dispatch({type: types.NEW_PRODUCTS_COUNT, newProductsCount: value});
+    };
+}
+
+export function setNewOffersCount(value) {
+    return (dispatch) => {
+        dispatch({type: types.NEW_OFFERS_COUNT, newOffersCount: value});
+    };
+}

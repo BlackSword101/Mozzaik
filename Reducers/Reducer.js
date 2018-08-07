@@ -16,4 +16,12 @@ export const Reducer = createReducer({}, {
         let newState = Object.assign({}, state, {onBackDailyOffersScreen: action.onBackDailyOffersScreen});
         return newState;
     },
+    [types.NEW_PRODUCTS_COUNT](state, action) {
+        let newState = Object.assign({}, state, {newProductsCount: action.newProductsCount});
+        return newState;
+    },
+    [types.NEW_OFFERS_COUNT](state, action) {
+        let newState = Object.assign({}, state, {newOffersCount: action.newOffersCount});
+        return newState;
+    },
 });
