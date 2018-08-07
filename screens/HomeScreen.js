@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Alert, BackHandler, Platform, StyleSheet, View} from "react-native";
+import {Alert, BackHandler, Dimensions, Platform, StyleSheet, View} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
@@ -119,7 +119,7 @@ class HomeScreen extends Component {
 
     _renderApp = () => {
         return (
-            <View style={[styles.appContainer]}>
+            <View style={[styles.appContainer,{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}]}>
                 <WKWebView
                     source={{uri: defaultUrl}}
                     sendCookies={true}

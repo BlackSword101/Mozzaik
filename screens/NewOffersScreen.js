@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Alert, BackHandler, StyleSheet, View, Platform} from "react-native";
+import {Alert, BackHandler, StyleSheet, View, Platform, Dimensions} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
@@ -87,7 +87,7 @@ class NewOffersScreen extends Component {
 
     _renderApp = () => {
         return (
-            <View style={[styles.appContainer]}>
+            <View style={[styles.appContainer,{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}]}>
                 <WKWebView
                     //style={{flex: 1}}
                     source={{uri: defaultUrl}}

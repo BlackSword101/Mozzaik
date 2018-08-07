@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View, Platform} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View, Platform, SafeAreaView, Dimensions} from 'react-native';
 import colors from "../theme/colors";
 import InfoScreen from "../screens/InfoScreen";
 
@@ -19,6 +19,7 @@ export default class Header extends Component {
 
     render() {
         return (
+            <SafeAreaView style={{ backgroundColor:'#fff',top:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : (Platform.OS === 'android')? 0 : 0}}>
             <View style={[styles.wrapper]}>
                 <View style={[styles.container]}>
                     <TouchableOpacity activeOpacity={1} style={{}} disabled={!this.props.canGoBack} onPress={this._onBackPress}>
@@ -30,6 +31,7 @@ export default class Header extends Component {
                 </View>
                 <View style={[styles.border]}/>
             </View>
+            </SafeAreaView>
         );
     }
 }
