@@ -10,6 +10,7 @@ import CustomTabBar from '../components/CustomTabBar';
 import colors from "../theme/colors";
 import InfoScreen from "../screens/InfoScreen";
 import TermsAndConditionScreen from "../screens/TermsAndConditionScreen";
+import AboutUsScreen from "../screens/AboutUsScreen";
 
 const HomeStack = createStackNavigator({
         HomeScreen: {
@@ -19,24 +20,6 @@ const HomeStack = createStackNavigator({
                     header: null,
                     swipeEnabled: false,
                 }
-            },
-            // InfoScreen: {
-            //     screen: InfoScreen,
-            //     navigationOptions: ({navigation}) => {
-            //         return {
-            //             header: null,
-            //             swipeEnabled: false,
-            //         }
-            //     },
-            // },
-            TermsAndConditionScreen : {
-                screen:TermsAndConditionScreen,
-                navigationOptions: ({navigation}) => {
-                    return {
-                        header: null,
-                        swipeEnabled: false,
-                    }
-                },
             },
         },
     },
@@ -55,24 +38,6 @@ const ProductsStack = createStackNavigator({
                     header: null,
                     swipeEnabled: false,
                 }
-            },
-            // InfoScreen: {
-            //     screen: InfoScreen,
-            //     navigationOptions: ({navigation}) => {
-            //         return {
-            //             header: null,
-            //             swipeEnabled: false,
-            //         }
-            //     },
-            // },
-            TermsAndConditionScreen : {
-                screen:TermsAndConditionScreen,
-                navigationOptions: ({navigation}) => {
-                    return {
-                        header: null,
-                        swipeEnabled: false,
-                    }
-                },
             },
         },
     },
@@ -93,24 +58,6 @@ const OffersStack = createStackNavigator({
                 }
             },
         },
-        // InfoScreen: {
-        //     screen: InfoScreen,
-        //     navigationOptions: ({navigation}) => {
-        //         return {
-        //             header: null,
-        //             swipeEnabled: false,
-        //         }
-        //     },
-        // },
-        TermsAndConditionScreen : {
-            screen:TermsAndConditionScreen,
-            navigationOptions: ({navigation}) => {
-                return {
-                    header: null,
-                    swipeEnabled: false,
-                }
-            },
-        },
     },
 
     {
@@ -122,6 +69,24 @@ const OffersStack = createStackNavigator({
 const InfoStack = createStackNavigator({
         InfoScreen: {
             screen: InfoScreen,
+            navigationOptions: ({navigation}) => {
+                return {
+                    header: null,
+                    swipeEnabled: false,
+                }
+            },
+        },
+        AboutUsScreen : {
+            screen:AboutUsScreen,
+            navigationOptions: ({navigation}) => {
+                return {
+                    header: null,
+                    swipeEnabled: false,
+                }
+            },
+        },
+        TermsAndConditionScreen : {
+            screen:TermsAndConditionScreen,
             navigationOptions: ({navigation}) => {
                 return {
                     header: null,

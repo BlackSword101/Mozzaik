@@ -64,9 +64,13 @@ export default class InfoScreen extends Component {
               style={styles.ModalWrapper}
               visible={this.state.aboutUsModalVisible}>
               <View style={[styles.aboutUsContainer]}>
-                  <Text style={[styles.boldText, styles.aboutText]}>About Us</Text>
+                  <Text style={[styles.boldText, styles.aboutText]}>اتصل بنا:</Text>
                   <Text style={[styles.aboutText]}>Mozzaik GmbH</Text>
-                  <Text style={[styles.aboutText]}>Else-Lasker-Schüler-Str. 69 Wuppertal - 42107</Text>
+                  <Text style={[styles.aboutText]}>Döinghauser Str. 37</Text>
+                  <Text style={[styles.aboutText]}>58332 Schwelm</Text>
+                  <Text style={[styles.aboutText]}>خدمة الزبائن</Text>
+                  <Text style={[styles.aboutText]}>من الاثنين إلى الجمعة</Text>
+                  <Text style={[styles.aboutText]}>من الساعة 8 لغاية الساعة 18</Text>
                   <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._callPhone('tel:020228323333');}}>
                      <Text style={[styles.aboutText]}>Tel: 0202 / 283 233 33</Text>
                   </TouchableOpacity>
@@ -105,17 +109,17 @@ export default class InfoScreen extends Component {
                 <FlatList
                     data={[
                         {
-                            key: 'About Us',
-                            ico: require('../components/img/about-us-icon-png-20.jpg'),
+                            key: 'اتصل بنا',
+                            ico: require('../components/img/contact-us.png'),
                             onPressIn: () => {
                                 this.setState({aboutUsModalVisible: true});
                             }
                         },
                         {
-                            key: 'Contact Us',
-                            ico: require('../components/img/contact-us.png'),
+                            key: 'من نحن',
+                            ico: require('../components/img/about-us-icon-png-20.jpg'),
                             onPressIn: () => {
-                                this._callPhone('tel:017641253922');
+                                this.props.navigation.navigate('AboutUsScreen');
                             }
                         },
                         {
@@ -182,7 +186,8 @@ const styles = StyleSheet.create({
         padding:15,
         backgroundColor: 'white',
         borderRadius: 5,
-        // width: winSize.width / 1.25,
+        alignItems:'flex-end',
+        width: Dimensions.get('window').width / 1.30,
         // height: winSize.height / 2
     },
     boldText : {
