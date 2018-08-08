@@ -85,7 +85,7 @@ export default class SplashScreen extends Component {
         return (
             <View style={[styles.container, styles.center]}>
                 <Image fadeDuration={0} style={[styles.logo]} source={require('../components/img/logo.png')}/>
-                <AppLoader/>
+                <AppLoader extraStyle={{marginTop:80}}/>
             </View>
         );
     };
@@ -118,10 +118,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo: {
-        width: 80,
-        height: 95,
-        marginLeft: -12,
-        marginBottom: 200,
+        width: '51%',
+        // height: 120,
+        marginLeft: -30,
+        marginBottom: 150,
         zIndex: 3,
+        flex:0.53
     }
 });

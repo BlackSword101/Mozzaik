@@ -13,7 +13,7 @@ export default class AppLoader extends Component {
 
     render() {
         return (
-            <View style={[styles.container, {backgroundColor: this.props.backgroundColor}]}>
+            <View style={[styles.container, {backgroundColor: this.props.backgroundColor}, this.props.extraStyle]}>
                 <BubblesLoader size={6} color={this.props.color}/>
             </View>
         );
@@ -23,6 +23,7 @@ export default class AppLoader extends Component {
 AppLoader.defaultProps = {
     color: colors.orange,
     backgroundColor: colors.white,
+    extraStyle: null
 };
 
 const styles = StyleSheet.create({

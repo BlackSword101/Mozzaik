@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 5,
         alignItems:'flex-end',
-        width: Dimensions.get('window').width / 1.30,
+        width: Dimensions.get('window').width / 1.15,
         // height: winSize.height / 2
     },
     boldText : {
