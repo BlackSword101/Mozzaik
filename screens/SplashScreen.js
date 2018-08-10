@@ -8,7 +8,7 @@ import {
     UIManager,
     StatusBar,
     I18nManager,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 
 import {Provider} from 'react-redux';
@@ -112,17 +112,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
+        // backgroundColor: 'red',
     },
     center: {
         justifyContent: 'center',
         alignItems: 'center'
     },
     logo: {
-        width: '51%',
-        // height: 120,
-        marginLeft: -30,
+        resizeMode: 'contain',
+        width: '50%',
+        // height: (Dimensions.get('window').height / Dimensions.get('window').width) * Dimensions.get('window').width,
+        marginLeft: -34,
         marginBottom: 150,
         zIndex: 3,
-        flex:0.53
+        flex: 0.5
     }
 });

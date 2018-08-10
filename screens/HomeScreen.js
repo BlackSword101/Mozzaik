@@ -125,7 +125,7 @@ class HomeScreen extends Component {
                     sendCookies={true}
                     useWKCookieStore={true}
                     javaScriptEnabled={true}
-                    //style={{flex: 1}}
+                    // style={{flex: 1}}
                     injectedJavaScript={Helpers._iosCookiesJsCode()}
                     ref={webViewRef}
                     allowsBackForwardNavigationGestures={true}

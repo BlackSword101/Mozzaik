@@ -11,7 +11,6 @@ import {
     Dimensions,
     BackHandler,
     Text,
-    PixelRatio
 } from 'react-native';
 import colors from "../theme/colors";
 
