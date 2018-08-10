@@ -84,7 +84,7 @@ export default class SplashScreen extends Component {
     _renderSplash = () => {
         return (
             <View style={[styles.container, styles.center]}>
-                <Image fadeDuration={0} style={[styles.logo]} source={require('../components/img/logo.png')}/>
+                <Image fadeDuration={0} style={[styles.logo]} source={require('../components/img/banner.png')}/>
                 <AppLoader extraStyle={{marginTop:80}}/>
             </View>
         );
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: 'contain',
-        width: '50%',
+        width: '70%',
         // height: (Dimensions.get('window').height / Dimensions.get('window').width) * Dimensions.get('window').width,
         marginLeft: -34,
         marginBottom: 150,
