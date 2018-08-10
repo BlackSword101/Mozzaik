@@ -24,4 +24,12 @@ export const Reducer = createReducer({}, {
         let newState = Object.assign({}, state, {newOffersCount: action.newOffersCount});
         return newState;
     },
+    [types.UPDATE_NEW_PRODUCTS_SCREEN](state, action) {
+        let newState = Object.assign({}, state, {updateNewProductsScreen: action.updateNewProductsScreen});
+        return newState;
+    },
+    [types.UPDATE_NEW_OFFERS_SCREEN](state, action) {
+        let newState = Object.assign({}, state, {updateNewOffersScreen: action.updateNewOffersScreen});
+        return newState;
+    },
 });

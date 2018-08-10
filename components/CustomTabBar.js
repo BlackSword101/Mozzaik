@@ -94,6 +94,7 @@ class CustomTabBar extends Component {
                         }
                         // navigation.dispatch(backAction);
                         jumpToIndex(index);
+                        this.props.newProductsScreenUpdate(Math.floor(Math.random() * Math.floor(1000000)));
                     }}>
                         <View style={[styles.item, {}]}>
                             <Image style={[styles.newProductsIcon,{tintColor: tintColor}]} source={require('../components/img/new_products_0.png')}/>
@@ -135,6 +136,7 @@ class CustomTabBar extends Component {
                         }
                         // navigation.dispatch(backAction);
                         jumpToIndex(index);
+                        this.props.newOffersScreenUpdate(Math.floor(Math.random() * Math.floor(1000000)));
                     }}>
                         <View style={styles.item}>
                             <Image style={[styles.newOffersIcon, {tintColor: tintColor}]} source={require('../components/img/discount.png')}/>
@@ -248,7 +250,6 @@ function mapStateToProps(state) {
         onBackDailyOffersScreen: (typeof state.Reducer.onBackDailyOffersScreen !== "undefined" ? state.Reducer.onBackDailyOffersScreen : 0),
         newProductsCount: (typeof state.Reducer.newProductsCount !== "undefined" ? state.Reducer.newProductsCount : 0),
         newOffersCount: (typeof state.Reducer.newOffersCount !== "undefined" ? state.Reducer.newOffersCount : 0),
-
     };
 }
 

@@ -87,7 +87,7 @@ class NewProductsScreen extends Component {
 
     _renderApp = () => {
         return (
-            <View style={[styles.appContainer,{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}]}>
+            <View key={this.props.updateNewProductsScreen} style={[styles.appContainer,{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}]}>
                 <WKWebView
                     //style={{flex: 1}}
                     source={{uri: defaultUrl}}
@@ -166,7 +166,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        updateNewProductsScreen: (typeof state.Reducer.updateNewProductsScreen !== "undefined" ? state.Reducer.updateNewProductsScreen : 0),
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProductsScreen);

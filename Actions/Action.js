@@ -29,3 +29,15 @@ export function setNewOffersCount(value) {
         dispatch({type: types.NEW_OFFERS_COUNT, newOffersCount: value});
     };
 }
+
+export function newProductsScreenUpdate(value) {
+    return (dispatch) => {
+        dispatch({type: types.UPDATE_NEW_PRODUCTS_SCREEN, updateNewProductsScreen: value});
+    };
+}
+
+export function newOffersScreenUpdate(value) {
+    return (dispatch) => {
+        dispatch({type: types.UPDATE_NEW_OFFERS_SCREEN, updateNewOffersScreen: value});
+    };
+}
