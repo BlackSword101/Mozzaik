@@ -94,12 +94,9 @@ export default class AboutUsScreen extends Component {
                         {'58332 Schwelm'}
                     </Text>
                     <View style={{width: '100%', height: 5, backgroundColor: colors.white}}/>
-                    <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._callPhone('tel:020228323333');}}>
-                        <Text style={[styles.aboutText]}>{'هاتف: 020228323333'}</Text>
+                    <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._callPhone('tel:023364739575');}}>
+                        <Text style={[styles.aboutText]}>{'هاتف: 023364739575'}</Text>
                     </TouchableOpacity>
-                    <Text style={[styles.text]}>
-                        {'فاكس: 020228323336'}
-                    </Text>
                     <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._sendEmail('mailto:info@mozzaik.de');}}>
                         <Text style={[styles.aboutText]}>{'الايميل: info@mozzaik.de'}</Text>
                     </TouchableOpacity>

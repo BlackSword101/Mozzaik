@@ -71,10 +71,9 @@ export default class InfoScreen extends Component {
                   <Text style={[styles.aboutText]}>خدمة الزبائن</Text>
                   <Text style={[styles.aboutText]}>من الاثنين إلى الجمعة</Text>
                   <Text style={[styles.aboutText]}>من الساعة 8 لغاية الساعة 18</Text>
-                  <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._callPhone('tel:020228323333');}}>
-                     <Text style={[styles.aboutText]}>Tel: 0202 / 283 233 33</Text>
+                  <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._callPhone('tel:023364739575');}}>
+                     <Text style={[styles.aboutText]}>Tel: 023364739575</Text>
                   </TouchableOpacity>
-                  <Text style={[styles.aboutText]}>Fax: 0202 / 283 233 36</Text>
                   <TouchableOpacity activeOpacity={1} style={{}} onPress={()=>{this._sendEmail('mailto:info@mozzaik.de');}}>
                     <Text style={[styles.aboutText]}>E-Mail: info@mozzaik.de</Text>
                   </TouchableOpacity>

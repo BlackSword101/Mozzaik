@@ -105,7 +105,7 @@ class CustomTabBar extends Component {
                                 this.props.newProductsCount ?
                                     <View style={{
                                         position: 'absolute',
-                                        backgroundColor: colors.green,
+                                        backgroundColor: colors.orange,
                                         top: 1,
                                         bottom: 0,
                                         right: '31%',
@@ -144,7 +144,7 @@ class CustomTabBar extends Component {
                                 this.props.newOffersCount ?
                                     <View style={{
                                         position: 'absolute',
-                                        backgroundColor: colors.orange,
+                                        backgroundColor: colors.green,
                                         top: 1,
                                         bottom: 0,
                                         right: '26%',
