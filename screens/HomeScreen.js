@@ -14,7 +14,6 @@ import * as ActionCreators from "../Actions/Action";
 import CookieManager from 'react-native-cookies';
 import Helpers from "../Lib/Helpers";
 
-
 const webViewRef = 'homeWebView';
 const defaultUrl = 'https://www.mozzaik.de/';
 
@@ -72,24 +71,27 @@ class HomeScreen extends Component {
                     }
                 });
         } else if(Platform.OS === 'ios') {
-            let id_lang = Helpers._getParameterByName('id_lang', navState.url);
-            let id_customer = Helpers._getParameterByName('id_customer', navState.url);
-            let nb_products = Helpers._getParameterByName('nb_products', navState.url);
-            let nb_offers = Helpers._getParameterByName('nb_offers', navState.url);
-            if (id_lang !== undefined && id_lang !== 'undefined' && id_lang !== "undefined" && id_lang !== null) {
-                this._channel = `mozzaik_notifications_lang_${id_lang}`;
+
+            //
+            // let id_lang = this.id_lang;
+            // let id_customer = this.id_customer;
+            // let nb_products = this.nb_products;
+            // let nb_offers = this.nb_offers;
+
+            if (this.id_lang !== undefined && this.id_lang !== 'undefined' && this.id_lang !== "undefined" && this.id_lang !== null && this.id_lang !== "null") {
+                this._channel = `mozzaik_notifications_lang_${this.id_lang}`;
             } else {
                 this._channel = `mozzaik_all_users_channel`;
             }
 
-            if (nb_products !== undefined && nb_products !== 'undefined' && nb_products !== "undefined" && nb_products !== null) {
-                this.props.setNewProductsCount(nb_products);
+            if (this.nb_products !== undefined && this.nb_products !== 'undefined' && this.nb_products !== "undefined" && this.nb_products !== null && this.nb_products !== "null") {
+                this.props.setNewProductsCount(this.nb_products);
             } else {
                 this.props.setNewProductsCount(0);
             }
 
-            if (nb_offers !== undefined && nb_offers !== 'undefined' && nb_offers !== "undefined" && nb_offers !== null) {
-                this.props.setNewOffersCount(nb_offers);
+            if (this.nb_offers !== undefined && this.nb_offers !== 'undefined' && this.nb_offers !== "undefined" && this.nb_offers !== null && this.nb_offers !== "null") {
+                this.props.setNewOffersCount(this.nb_offers);
             } else {
                 this.props.setNewOffersCount(0);
             }
@@ -117,6 +119,13 @@ class HomeScreen extends Component {
         }
     };
 
+    _onMessage = (data) => {
+        this.id_lang = (data.id_lang !== null ? data.id_lang :  this.id_lang);
+        this.id_customer = (data.id_customer !== null ? data.id_customer :  this.id_customer);
+        this.nb_products = (data.nb_products !== null ? data.nb_products :  this.nb_products);
+        this.nb_offers = (data.nb_offers !== null ? data.nb_offers :  this.nb_offers);
+    };
+
     _renderApp = () => {
         return (
             <View style={[styles.appContainer,{ marginTop:(Platform.OS === 'ios' && Dimensions.get('window').height === 812) ? 20 : 0}]}>
@@ -125,6 +134,7 @@ class HomeScreen extends Component {
                     sendCookies={true}
                     useWKCookieStore={true}
                     javaScriptEnabled={true}
+                    onMessage={(event) => this._onMessage(event.nativeEvent.data)}
                     // style={{flex: 1}}
                     injectedJavaScript={Helpers._iosCookiesJsCode()}
                     ref={webViewRef}

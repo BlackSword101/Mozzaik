@@ -18,6 +18,7 @@
     "react-native-modal-wrapper": "3.1.0",
     "react-native-push-notification": "3.0.2",
     "react-native-redux-listener": "0.3.0",
+    "react-native-webkit-localstorage-reader": "^2.0.4",
     "react-native-wkwebview-reborn": "1.21.0",
     "react-navigation": "2.6.2",
     "react-redux": "5.0.7",

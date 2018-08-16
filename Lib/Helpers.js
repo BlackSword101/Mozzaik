@@ -23,14 +23,15 @@ export default class Helpers {
                     }
                     return null;
                 }
-                var id_lang = readCookie('id_lang');
-                var id_customer = readCookie('id_customer');
-                var nb_products = readCookie('nb_products');
-                var nb_offers = readCookie('nb_offers');
-                if (history.pushState) {
-                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id_lang='+id_lang+'&id_customer='+id_customer+'&nb_products='+nb_products+'&nb_offers='+nb_offers;
-                    window.history.pushState({path:newurl},'',newurl);
-                }`;
+
+                 window.postMessage({
+                 id_lang : readCookie('id_lang'),
+                 id_customer : readCookie('id_customer'),
+                 nb_products : readCookie('nb_products'),
+                 nb_offers : readCookie('nb_offers'),
+                 });
+             
+                `;
     }
 
 }
