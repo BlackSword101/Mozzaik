@@ -102,7 +102,7 @@ class CustomTabBar extends Component {
                                 {/*<Text style={{color:'#ffffff', fontSize:8}}>{'70'}</Text>*/}
                             {/*</View>*/}
                             {(
-                                this.props.newProductsCount ?
+                                this.props.newProductsCount != 0 ?
                                     <View style={{
                                         position: 'absolute',
                                         backgroundColor: colors.orange,
@@ -141,7 +141,7 @@ class CustomTabBar extends Component {
                         <View style={styles.item}>
                             <Image style={[styles.newOffersIcon, {tintColor: tintColor}]} source={require('../components/img/discount.png')}/>
                             {(
-                                this.props.newOffersCount ?
+                                this.props.newOffersCount != 0?
                                     <View style={{
                                         position: 'absolute',
                                         backgroundColor: colors.green,

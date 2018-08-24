@@ -1,3 +1,4 @@
+import {Alert, BackHandler} from "react-native";
 
 
 export default class Helpers {
@@ -11,6 +12,42 @@ export default class Helpers {
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
+
+    static _getExitMessage = (lang) => {
+
+
+        if(lang === 1 || lang === "1" || lang === '1') {
+            return Alert.alert(
+                'Exit Mozzaik!!!',
+                'Do you want to exit?',
+                [
+                    {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'Yes', onPress: () => BackHandler.exitApp()},
+                ],
+                {cancelable: false});
+        } else if(lang === 3 || lang === "3" || lang === '3') {
+            return Alert.alert(
+                'Ausfahrt Mozaik !!!',
+                'Möchtest du aussteigen?',
+                [
+                    {text: 'Nein', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'Ja', onPress: () => BackHandler.exitApp()},
+                ],
+                {cancelable: false});
+
+        } else {
+            return Alert.alert(
+                'الخروج من موزاييك!!!',
+                'هل تريد الخروج من موزاييك حقاً؟',
+                [
+                    {text: 'كلا', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'نعم', onPress: () => BackHandler.exitApp()},
+                ],
+                {cancelable: false});
+
+        }
+
+    };
 
     static _iosCookiesJsCode() {
         return `function readCookie(name) {

@@ -73,14 +73,7 @@ class NewProductsScreen extends Component {
             this.refs[webViewRef].goBack();
             return true;
         } else {
-            Alert.alert(
-                'Exit Mozzaik!!!',
-                'Do you want to exit?',
-                [
-                    {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'Yes', onPress: () => BackHandler.exitApp()},
-                ],
-                {cancelable: false});
+            Helpers._getExitMessage(this.id_lang);
             return true;
         }
     };

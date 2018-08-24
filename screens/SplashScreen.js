@@ -9,6 +9,7 @@ import {
     StatusBar,
     I18nManager,
     StyleSheet,
+    AppState
 } from 'react-native';
 
 import {Provider} from 'react-redux';
@@ -65,12 +66,19 @@ export default class SplashScreen extends Component {
         }
     }
 
+    _handleAppStateChange = async () => {
+      console.log('AppState: ', AppState.currentState);
+      if(AppState.currentState === 'active') {
+          if(Platform.OS === 'android') {
+              let BadgeAndroid = require('react-native-android-badge');
+              await BadgeAndroid.setBadge(parseInt(0));
+          }
+      }
+    };
+
     componentDidMount = async () => {
-        //
-        if(Platform.OS === 'android') {
-            let BadgeAndroid = require('react-native-android-badge');
-            BadgeAndroid.setBadge(parseInt(0));
-        }
+
+        await AppState.addEventListener('change', this._handleAppStateChange);
 
         setTimeout(()=>{
                 this.setState({

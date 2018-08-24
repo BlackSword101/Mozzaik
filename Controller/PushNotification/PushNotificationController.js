@@ -59,7 +59,7 @@ class PushNotificationController extends Component {
 
     _enablePushNotification = (channel) => {
 
-        console.log(this._SENDER_ID);
+        // console.log(this._SENDER_ID);
         // console.log('_enablePushNotification :', channel);
         // console.log('this._TOKEN :', this._TOKEN);
         const options = {
@@ -70,19 +70,18 @@ class PushNotificationController extends Component {
             },
 
             onNotification: (notification) => {
-
-                // const BadgeAndroid = require('react-native-android-badge');
+                console.log(notification);
                 if (notification['foreground']) {
 
                 }
 
                 //Notification from the background or when the app is killed
                 if (!notification['foreground']) {
-
                     if (Platform.OS !== 'ios' && Platform.Version < 26) {
                         this._messageCount++;
+                        // console.log('this._messageCount ', this._messageCount);
                         let BadgeAndroid = require('react-native-android-badge');
-                        BadgeAndroid.setBadge(parseInt(this._messageCount));
+                        BadgeAndroid.setBadge(this._messageCount);
                     }
                 }
 
@@ -120,7 +119,7 @@ class PushNotificationController extends Component {
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     // //Enable push notifications on provided set of channels.
     _addToPushChannels = (channel) => {
-        // console.log('channel: ', channel);
+        console.log('channel: ', channel);
         const addChannelsOptions = {
             channels: [channel], //array
             device: this._TOKEN,
@@ -135,7 +134,7 @@ class PushNotificationController extends Component {
             }
         };
         this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
-        this._listingChannelsForDevice();
+        // this._listingChannelsForDevice();
     };
 
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push

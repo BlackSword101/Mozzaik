@@ -34,6 +34,7 @@ class HomeScreen extends Component {
         if(Platform.OS !== 'ios') {
             this.props.passOnBackHomeScreen(this.onBackHomeScreen);
         }
+
     }
 
     componentWillUnmount() {
@@ -52,8 +53,11 @@ class HomeScreen extends Component {
         if(Platform.OS === 'android') {
             await CookieManager.get(defaultUrl)
                 .then(async (res) => {
+                    console.log('res :', res);
                     if (res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
                         this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
+                        this.id_lang = res.id_lang;
+                        console.log('   this.id_lang  :',    this.id_lang );
                     } else {
                         this._channel = `mozzaik_all_users_channel`;
                     }
@@ -107,14 +111,7 @@ class HomeScreen extends Component {
             this.refs[webViewRef].goBack();
             return true;
         } else {
-            Alert.alert(
-                'Exit Mozzaik!!!',
-                'Do you want to exit?',
-                [
-                    {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'Yes', onPress: () => BackHandler.exitApp()},
-                ],
-                {cancelable: false});
+            Helpers._getExitMessage(this.id_lang);
             return true;
         }
     };
