@@ -66,19 +66,8 @@ export default class SplashScreen extends Component {
         }
     }
 
-    _handleAppStateChange = async () => {
-      console.log('AppState: ', AppState.currentState);
-      if(AppState.currentState === 'active') {
-          if(Platform.OS === 'android') {
-              let BadgeAndroid = require('react-native-android-badge');
-              await BadgeAndroid.setBadge(parseInt(0));
-          }
-      }
-    };
 
     componentDidMount = async () => {
-
-        await AppState.addEventListener('change', this._handleAppStateChange);
 
         setTimeout(()=>{
                 this.setState({

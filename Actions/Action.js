@@ -41,3 +41,9 @@ export function newOffersScreenUpdate(value) {
         dispatch({type: types.UPDATE_NEW_OFFERS_SCREEN, updateNewOffersScreen: value});
     };
 }
+
+export function setBadgeCount(value) {
+    return (dispatch) => {
+        dispatch({type: types.SET_BADGE_COUNT, badgeCount: value});
+    };
+}

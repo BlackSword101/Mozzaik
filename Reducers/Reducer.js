@@ -32,4 +32,8 @@ export const Reducer = createReducer({}, {
         let newState = Object.assign({}, state, {updateNewOffersScreen: action.updateNewOffersScreen});
         return newState;
     },
+    [types.SET_BADGE_COUNT](state, action) {
+        let newState = Object.assign({}, state, {badgeCount: action.badgeCount});
+        return newState;
+    },
 });

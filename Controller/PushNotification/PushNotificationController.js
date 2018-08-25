@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {PushNotificationIOS, Platform} from 'react-native';
+import {PushNotificationIOS, Platform, AppState} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PubNubReact from "pubnub-react";
 // import BadgeAndroid from 'react-native-android-badge';
@@ -20,7 +20,7 @@ class PushNotificationController extends Component {
         //live keys
         this._SENDER_ID = '365209122432'; //live
         let subscribeKey = 'sub-c-2b8a3d86-8ea4-11e8-b7a4-ce74daf54d52'; //live
-        this._messageCount = 0;
+        // this._messageCount = 0;
         //debug keys
         // if (global.PRODUCTION === false) {
         //     this._SENDER_ID = '1092146930590'; //debug
@@ -70,7 +70,11 @@ class PushNotificationController extends Component {
             },
 
             onNotification: (notification) => {
+
                 console.log(notification);
+
+                console.log('onNotification AppState: ', AppState.currentState);
+
                 if (notification['foreground']) {
 
                 }
@@ -78,10 +82,11 @@ class PushNotificationController extends Component {
                 //Notification from the background or when the app is killed
                 if (!notification['foreground']) {
                     if (Platform.OS !== 'ios' && Platform.Version < 26) {
-                        this._messageCount++;
+                        // this._messageCount++;
+                        this.props.setBadgeCount(parseInt(this.props.badgeCount)+1);
                         // console.log('this._messageCount ', this._messageCount);
                         let BadgeAndroid = require('react-native-android-badge');
-                        BadgeAndroid.setBadge(this._messageCount);
+                        BadgeAndroid.setBadge(parseInt(this.props.badgeCount));
                     }
                 }
 
@@ -204,7 +209,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        // navigation: (typeof state.Reducer.navigation !== "undefined" ? state.Reducer.navigation : null),
+        badgeCount: (typeof state.Reducer.badgeCount !== "undefined" ? state.Reducer.badgeCount : 0),
     };
 }
 

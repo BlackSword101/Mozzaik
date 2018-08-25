@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Alert, BackHandler, Dimensions, Platform, StyleSheet, View} from "react-native";
+import {AppState, BackHandler, Dimensions, Platform, StyleSheet, View} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
@@ -30,18 +30,33 @@ class HomeScreen extends Component {
         }
     }
 
-    componentDidMount() {
+    _handleAppStateChange = async () => {
+        // console.log('AppState: ', AppState.currentState);
+        if(AppState.currentState === 'active') {
+            if(Platform.OS === 'android') {
+                let BadgeAndroid = require('react-native-android-badge');
+                this.props.setBadgeCount(0);
+                await BadgeAndroid.setBadge(parseInt(0));
+            }
+        }
+    };
+
+    componentDidMount = async () => {
+
+        await AppState.addEventListener('change', this._handleAppStateChange);
+
         if(Platform.OS !== 'ios') {
             this.props.passOnBackHomeScreen(this.onBackHomeScreen);
         }
 
-    }
+    };
 
     componentWillUnmount() {
         if(Platform.OS !== 'ios') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackHomeScreen);
         }
     }
+
 
     _onHomeNavigationStateChange = async (navState) => {
 
@@ -53,11 +68,9 @@ class HomeScreen extends Component {
         if(Platform.OS === 'android') {
             await CookieManager.get(defaultUrl)
                 .then(async (res) => {
-                    console.log('res :', res);
                     if (res.id_lang !== undefined && res.id_lang !== 'undefined' && res.id_lang !== "undefined" && res.id_lang !== null) {
                         this._channel = `mozzaik_notifications_lang_${res.id_lang}`;
                         this.id_lang = res.id_lang;
-                        console.log('   this.id_lang  :',    this.id_lang );
                     } else {
                         this._channel = `mozzaik_all_users_channel`;
                     }
