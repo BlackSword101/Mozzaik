@@ -83,10 +83,16 @@ class PushNotificationController extends Component {
                 if (!notification['foreground']) {
                     if (Platform.OS !== 'ios' && Platform.Version < 26) {
                         // this._messageCount++;
+                        // PushNotification.setApplicationIconBadgeNumber(16);
                         this.props.setBadgeCount(parseInt(this.props.badgeCount)+1);
                         // console.log('this._messageCount ', this._messageCount);
-                        let BadgeAndroid = require('react-native-android-badge');
-                        BadgeAndroid.setBadge(parseInt(this.props.badgeCount));
+                        if(Platform.OS === 'android') {
+                            let BadgeAndroid = require('react-native-android-badge');
+                                BadgeAndroid.setBadge(parseInt(this.props.badgeCount));
+                        } else if(Platform.OS === 'ios') {
+                            this.props.setBadgeCount(parseInt(this.props.badgeCount) + 1);
+                            PushNotification.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
+                        }
                     }
                 }
 

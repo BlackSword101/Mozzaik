@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import * as ActionCreators from "../Actions/Action";
 import CookieManager from 'react-native-cookies';
 import Helpers from "../Lib/Helpers";
+import PushNotification from "react-native-push-notification";
 
 const webViewRef = 'homeWebView';
 const defaultUrl = 'https://www.mozzaik.de/';
@@ -37,6 +38,9 @@ class HomeScreen extends Component {
                 let BadgeAndroid = require('react-native-android-badge');
                 this.props.setBadgeCount(0);
                 await BadgeAndroid.setBadge(parseInt(0));
+            } else if (Platform.OS === 'ios') {
+                this.props.setBadgeCount(0);
+                PushNotification.setApplicationIconBadgeNumber(parseInt(0));
             }
         }
     };
