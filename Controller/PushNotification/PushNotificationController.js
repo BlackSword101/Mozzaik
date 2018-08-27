@@ -95,7 +95,7 @@ class PushNotificationController extends Component {
                         }
                     } else {
                         this.props.setBadgeCount(parseInt(this.props.badgeCount) + 1);
-                        PushNotification.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
+                        PushNotificationIOS.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
                     }
                 }
 
