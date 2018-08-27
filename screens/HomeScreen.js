@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {AppState, BackHandler, Dimensions, Platform, StyleSheet, View} from "react-native";
+import {AppState, BackHandler, Dimensions, Platform, PushNotificationIOS, StyleSheet, View} from "react-native";
 import WKWebView from 'react-native-wkwebview-reborn';
 import Header from "../components/Header";
 import AppLoader from "../components/AppLoader";
@@ -38,9 +38,9 @@ class HomeScreen extends Component {
                 let BadgeAndroid = require('react-native-android-badge');
                 this.props.setBadgeCount(0);
                 await BadgeAndroid.setBadge(parseInt(0));
-            } else if (Platform.OS === 'ios') {
+            } else if (Platform.OS == 'ios') {
                 this.props.setBadgeCount(0);
-                PushNotification.setApplicationIconBadgeNumber(parseInt(0));
+                PushNotificationIOS.setApplicationIconBadgeNumber(parseInt(0));
             }
         }
     };
