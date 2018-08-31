@@ -38,10 +38,11 @@ class HomeScreen extends Component {
                 let BadgeAndroid = require('react-native-android-badge');
                 this.props.setBadgeCount(0);
                 await BadgeAndroid.setBadge(parseInt(0));
-            } else if (Platform.OS == 'ios') {
-                this.props.setBadgeCount(0);
-                PushNotification.setApplicationIconBadgeNumber(parseInt(0));
             }
+            // else if (Platform.OS == 'ios') {
+            //     this.props.setBadgeCount(0);
+            //     PushNotification.setApplicationIconBadgeNumber(parseInt(0));
+            // }
         }
     };
 
