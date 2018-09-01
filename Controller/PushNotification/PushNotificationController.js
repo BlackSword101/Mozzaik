@@ -95,10 +95,10 @@ class PushNotificationController extends Component {
                         //     PushNotification.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
                         // }
                     }
-                    // else if (Platform.OS == 'ios'){
-                    //     this.props.setBadgeCount(parseInt(this.props.badgeCount) + 1);
-                    //     PushNotification.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
-                    // }
+                    else if (Platform.OS == 'ios'){
+                        this.props.setBadgeCount(parseInt(this.props.badgeCount) + 1);
+                        PushNotification.setApplicationIconBadgeNumber(parseInt(this.props.badgeCount));
+                    }
                 }
 
                 // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
