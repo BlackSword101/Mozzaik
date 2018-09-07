@@ -16,7 +16,6 @@ class PushNotificationController extends Component {
     // https://www.pubnub.com/docs/react-native-javascript/pubnub-javascript-sdk
     constructor(props, ctx) {
         super(props, ctx);
-        this._TOKEN = null;
         //live keys
         this._SENDER_ID = '365209122432'; //live
         let subscribeKey = 'sub-c-2b8a3d86-8ea4-11e8-b7a4-ce74daf54d52'; //live
@@ -39,8 +38,11 @@ class PushNotificationController extends Component {
     };
 
     componentDidMount () {
-        // console.log(this.props.channel);
-        this._enablePushNotification(this.props.channel);
+        this._listingChannelsForDevice();
+        // console.log('componentDidMount :', this.props.channel);
+        // if(this.props.channel !== null) {
+            this._enablePushNotification(this.props.channel);
+        // }
         // this.props.navigation.navigate('MyAccount');
         // this.props.passDeleteAllDevicesInChannels(() => {
         //     this._deleteAllDevicesInChannels()
@@ -48,12 +50,13 @@ class PushNotificationController extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+        this._listingChannelsForDevice();
+
         // console.log('nextProps.channel :', nextProps.channel );
         // console.log('this.props.channel :', this.props.channel );
 
         if(nextProps.channel !== this.props.channel) {
-            this._deleteAllDevicesInChannels();
-            this._enablePushNotification(nextProps.channel);
+                this._enablePushNotification(nextProps.channel);
         }
     }
 
@@ -71,6 +74,7 @@ class PushNotificationController extends Component {
 
             onNotification: (notification) => {
 
+                this._listingChannelsForDevice();
                 // console.log(notification);
 
                 // console.log('onNotification AppState: ', AppState.currentState);
@@ -135,6 +139,12 @@ class PushNotificationController extends Component {
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     // //Enable push notifications on provided set of channels.
     _addToPushChannels = (channel) => {
+
+         // this._listingChannelsForDevice();
+        // console.log(this._listingChannelsForDevice());
+
+        // this._deleteAllDevicesInChannels();
+
         // console.log('channel: ', channel);
         const addChannelsOptions = {
             channels: [channel], //array
@@ -147,6 +157,7 @@ class PushNotificationController extends Component {
             } else {
                 // console.log("operation done!");
                 // this._subscribeToChannels(userID);
+                this._listingChannelsForDevice();
             }
         };
         this.pubnub.push.addChannels(addChannelsOptions, addChannelsFunction);
@@ -174,19 +185,45 @@ class PushNotificationController extends Component {
             }
         };
 
-        return this.pubnub.push.deleteDevice(deleteDeviceOptions, deleteDeviceFunction);
+         this.pubnub.push.deleteDevice(deleteDeviceOptions, deleteDeviceFunction);
+    };
+
+
+    _removeDiviceFromChannels = (channels) => {
+
+
+        let deleteDeviceOptions = {
+            channels: channels,
+            device: this._TOKEN,
+            pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
+        };
+
+        const deleteDeviceFunction = (status) => {
+            if (status.error) {
+                // console.log(this._TOKEN);
+                return false;
+            } else {
+                // console.log(this._TOKEN);
+                return true;
+            }
+        };
+
+        this.pubnub.push.removeChannels(deleteDeviceOptions, deleteDeviceFunction);
     };
     //
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#listing-channels-device
     // //Request for all channels on which push notification has been enabled using specified pushToken
     _listingChannelsForDevice = () => {
 
+
         const listChannelsOptions = {
             device: this._TOKEN,
             pushGateway: this._PUSH_GATEWAY // apns, gcm, mpns
         };
 
-        const listChannelsFunction = (status, response) => {
+        let listChannelsFunction = (status, response) => {
+
+            let channels = [];
 
             if (status.error) {
                 // console.log("operation failed w/ error:", status);
@@ -195,8 +232,15 @@ class PushNotificationController extends Component {
 
             // console.log("listing push channel for device");
             response.channels.forEach(function (channel) {
-                // console.log(channel)
-            })
+                channels.push(channel);
+            });
+
+            // console.log(channels);
+            if(channels.length > 1){
+                this._removeDiviceFromChannels(['mozzaik_all_users_channel']);
+            }
+
+
         };
 
         this.pubnub.push.listChannels(listChannelsOptions, listChannelsFunction);
