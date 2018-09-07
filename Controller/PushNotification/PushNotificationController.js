@@ -189,7 +189,7 @@ class PushNotificationController extends Component {
     };
 
 
-    _removeDiviceFromChannels = (channels) => {
+    _removeDeviceFromChannels = (channels) => {
 
 
         let deleteDeviceOptions = {
@@ -237,7 +237,7 @@ class PushNotificationController extends Component {
 
             // console.log(channels);
             if(channels.length > 1){
-                this._removeDiviceFromChannels(['mozzaik_all_users_channel']);
+                this._removeDeviceFromChannels(['mozzaik_all_users_channel']);
             }
 
 
