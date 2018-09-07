@@ -71,9 +71,9 @@ class PushNotificationController extends Component {
 
             onNotification: (notification) => {
 
-                console.log(notification);
+                // console.log(notification);
 
-                console.log('onNotification AppState: ', AppState.currentState);
+                // console.log('onNotification AppState: ', AppState.currentState);
 
                 if (notification['foreground']) {
 
@@ -135,7 +135,7 @@ class PushNotificationController extends Component {
     // //https://www.pubnub.com/docs/react-native-javascript/api-reference-mobile-push#adding-device-channel
     // //Enable push notifications on provided set of channels.
     _addToPushChannels = (channel) => {
-        console.log('channel: ', channel);
+        // console.log('channel: ', channel);
         const addChannelsOptions = {
             channels: [channel], //array
             device: this._TOKEN,
@@ -143,9 +143,9 @@ class PushNotificationController extends Component {
         };
         const addChannelsFunction = (status) => {
             if (status.error) {
-                console.log("operation failed w/ error:", status);
+                // console.log("operation failed w/ error:", status);
             } else {
-                console.log("operation done!");
+                // console.log("operation done!");
                 // this._subscribeToChannels(userID);
             }
         };
@@ -195,7 +195,7 @@ class PushNotificationController extends Component {
 
             // console.log("listing push channel for device");
             response.channels.forEach(function (channel) {
-                console.log(channel)
+                // console.log(channel)
             })
         };
 
